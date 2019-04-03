@@ -1,0 +1,3 @@
+rootProject.name = 'icn_HIMS_DAPP'
+
+include ':app'
