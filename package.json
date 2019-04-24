@@ -7,8 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fabric-contract-api": "^1.4.0",
     "react": "16.8.3",
-    "react-native": "0.59.3"
+    "react-native": "0.59.3",
+    "react-native-firebase": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

@@ -1,82 +1,136 @@
 import React, { Component } from 'react';
-import { IP } from "../constant";
 import {
     View,
     Text,
+    StyleSheet,
+    Dimensions,
+    FlatList,
     TouchableOpacity,
-    FlatList
+    Alert
 } from 'react-native';
-
-class UserItem extends Component {
-    _onPress = () => {
-        this.props.onPressItem(this.props.key);
-    }
-    render() {
-        return(
-            <TouchableOpacity onPress={this._onPress}>
-                <View>
-                    <Text style={{color: textColor}}>{this.props.title}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-}
-
+const { width, height } = Dimensions.get("window");
 export default class InquiryHealthInfo extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
         this.state = {
-            userList : []
+            body : ''
         }
-    }
-    _keyExtractor = (item, index) => item.id;
+    };
 
-    _onPressItem = (id) => {
-        // updater functions are preferred for transactional updates
-        this.setState((state) => {
-          // copy the map rather than modifying state.
-          const selected = new Map(state.selected);
-          selected.set(id, !selected.get(id)); // toggle
-          return {selected};
-        });
-      };
-    
-
-    _getUserList = () => {
-        fetch(IP + "/getAllUsers", {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-        .then((response) => response.json())
-        .then((res) => {
-            this.setState({userList: res});
-        })
+    componentDidMount(){
+        this._callBackend();
     }
 
-    _renderItem = ({item}) => (
-        <UserItem
-          id={item.key}
-          onPressItem={this._onPressItem}
-          selected={!!this.state.selected.get(item.id)}
-          title={item.title}
-        />
-      );
+    _callBackend = async() => {
+        await fetch('http://39.115.19.145:3000/api/org.example.user.User',
+            {method: 'GET',
+            Accept: 'application/json',
+            "headers" : {'Content-Type': 'application/json',
+                         'X-Access-Token' : 'ZHA5d7MckEGI64tAixrQuunDeAyoNAngpluLzLKRjM61wTvlhv7VFGopXXIhljeI'}
+            }).then(response=>response.json()).then((res=>{
+                if(res.length!=0){
+                    console.log(res)
+                    this.setState({
+                        body : res
+                    });
+                }
+            }));
+    }
+    _keyExtractor = (item) => item.uID;
 
     render() {
-        setInterval(
-            this._getUserList, 2000
-        )
-        
         return(
-            <FlatList
-                data={this.props.data}
-                extraData={this.state}
-                keyExtractor={this._keyExtractor}
-                renderItem={this._renderItem}
-            />
+            <View style={styles.container}>
+                <View stlye={{flex:1}}>
+                    <FlatList 
+                        data={this.state.body} 
+                        keyExtractor={this._keyExtractor}
+                        renderItem={({item}) => (
+                            <UserList res={item} />
+                            )
+                        }
+                    />
+                </View>
+            </View>
         )
     }
 }
+class UserList extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            res : this.props.res
+        }
+    }
+
+    _onPress = () =>{
+        this._callTransaction();
+    }
+
+    _callTransaction = async() =>{
+        const param ="resource:org.example.user.User#"+this.state.res.uID;
+        var ww = encodeURIComponent(param);
+        await fetch('http://39.115.19.145:3000/api/queries/selectMyRecordData?user='+ww,
+        {method: 'GET',
+        Accept: 'application/json',
+        "headers" : {'Content-Type': 'application/json',
+        'X-Access-Token' : 'ZHA5d7MckEGI64tAixrQuunDeAyoNAngpluLzLKRjM61wTvlhv7VFGopXXIhljeI'}
+        }).then(response=>response.json()).then((res=>{
+            if(res.length!=0){
+                console.log(res);
+            }else{
+                console.log("null");
+            }
+        }));
+    }
+
+    render(){
+        return(
+            <TouchableOpacity onPress={this._onPress}>
+                <Profile res = {this.state.res}/>
+            </TouchableOpacity>
+        );
+    };
+}
+
+class Profile extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            name : this.props.res.name,
+            age : this.props.res.age,
+            uID : this.props.res.uID 
+        }
+    };
+    render(){
+        return(
+            <View style={{
+                    flex:1,
+                    flexDirection: 'row',
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    height : 130,
+                    marginBottom : 5,
+                    backgroundColor : this.props.backColor
+            }}>
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.name}</Text>
+                    </View>
+                </View>            
+            </View>
+        )
+    };
+}
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#ffffff",
+        width: width,
+        height: height
+    },
+    buttonContainer: {
+        width: width,
+        alignItems: "center"
+    }
+})
