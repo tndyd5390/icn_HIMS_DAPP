@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "176083684168",
+    "firebase_url": "https://hims-22663.firebaseio.com",
+    "project_id": "hims-22663",
+    "storage_bucket": "hims-22663.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176083684168:android:5f4a23a9c056358f",
+        "android_client_info": {
+          "package_name": "com.icn_hims_dapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176083684168-ea5gncehj6a3hdjhtbsqaob0tm177nq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBulwGoGCmvPv_sysqAUQpCe-IEUdkdnHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176083684168-ea5gncehj6a3hdjhtbsqaob0tm177nq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
