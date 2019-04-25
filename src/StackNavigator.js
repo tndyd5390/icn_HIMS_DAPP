@@ -9,12 +9,22 @@ import Register from './screen/user/Register';
 import Login from './screen/user/Login';
 import InquiryHealthInfo from './screen/InquiryHealthInfo'
 import TransactionList from './screen/TransactionList'
-
+import InsertDiagnosisInfo from "./screen/diagnosisInfo/InsertDiagnosisInfo";
 
 
 export default class StackNavigator extends Component{
     render() {
         const Stacks = createStackNavigator({
+            InsertDiagnosisInfo: {
+                screen: InsertDiagnosisInfo,
+                navigationOptions: {
+                    title: "진료기록 생성",
+                    headerTitleStyle: {
+                        width: "85%",
+                        textAlign: "center"
+                    }
+                }
+            },
             Init : {
                 screen: Init, 
                 navigationOptions: {
