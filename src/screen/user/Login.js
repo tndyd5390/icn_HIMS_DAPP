@@ -19,7 +19,8 @@ export default class InquiryHealthInfo extends Component {
         super(props);
         this.state = {
             id : '',
-            pwd : ''
+            pwd : '',
+            fcm : '',
         }
     };
 
@@ -27,12 +28,14 @@ export default class InquiryHealthInfo extends Component {
     }
 
     _login = async()=>{
+       console.log("login")
         const params = {
             id : this.state.id,
             pwd : this.state.pwd,
         };
         const loginFcmToken = await firebase.messaging().getToken();
         const fcmToken = await AsyncStorage.getItem('fcmToken');
+        this.setState({fcm : fcmToken});
         if(loginFcmToken !== fcmToken){
           await AsyncStorage.setItem('fcmToken', loginFcmToken);
         }
@@ -45,11 +48,9 @@ export default class InquiryHealthInfo extends Component {
         },
         body : JSON.stringify(params),
         }).then(response=>response.json()).then((res=>{
-            console.log(res);
             if(res.length!=0){
-                console.log(res[0]);
-                this._storeData(res[0]);
-                this.props.navigation.navigate('Menu');
+              this._storeData(JSON.stringify(res[0]));
+              this.props.navigation.navigate('Menu');
             }else{
                 alert('오류');
             }

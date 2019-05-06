@@ -34,19 +34,10 @@ export default class InquiryHealthInfo extends Component {
             body : JSON.stringify(params)
             }).then(response=>response.json()).then((res=>{
                 if(res.length!=0){
-                        this.setState({
-                            body : res
-                        });
-                    // }else{
-                    //     Alert.alert(
-                    //         'PERMISSION ERR',
-                    //         res.err,
-                    //         [
-                    //             {text : '뒤로가기', onPress : () => this.props.navigation.goBack()}
-                    //         ],
-                    //         {cancelable : false}
-                    //     )
-                    // }
+                    console.log(res)
+                    this.setState({
+                        body : res
+                    });
                 }
             }));
     }
@@ -110,7 +101,7 @@ class Info extends Component {
                     marginBottom : 5,
                     backgroundColor : this.props.backColor
             }}>
-                <View style={{justifyContent: 'center', marginLeft : 10}}>
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
                     <View>
                         <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.date}</Text>
                     </View>
@@ -118,10 +109,6 @@ class Info extends Component {
                 <View style={{justifyContent: 'center', marginLeft : 15}}>
                     <View>
                         <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.hospital}</Text>
-                    </View>
-                </View>            
-                <View style={{justifyContent: 'center', marginLeft : 15}}>
-                    <View>
                         <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.doctor}</Text>
                     </View>
                 </View>            
