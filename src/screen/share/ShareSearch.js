@@ -20,7 +20,7 @@ export default class ShareSearch extends Component {
         super(props);
 
         this.state = {
-            txType : '',
+            txType : '0000',
             userInfo : '',
             diseaseCode : ''
         }

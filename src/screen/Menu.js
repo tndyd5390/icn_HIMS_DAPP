@@ -22,41 +22,17 @@ export default class Init extends Component {
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity 
                             style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("SearchInfo")}
+                            onPress={() => this.props.navigation.navigate("DocuList")}
                             >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>개인건강정보 조회</Text>
+                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>디지털기록문서 열람</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity 
                             style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("TransactionList")}
+                            onPress={() => this.props.navigation.navigate("InsertDocu")}
                             >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>트랜잭션 이력 조회</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <TouchableOpacity 
-                            style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("ShareRequest")}
-                            >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>의료정보공유 요청</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <TouchableOpacity 
-                            style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("ShareSearch")}
-                            >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>공유정보 조회</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <TouchableOpacity 
-                            style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("InsertList")}
-                            >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>건강정보기록</Text>
+                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>디지털기록문서 생성</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
