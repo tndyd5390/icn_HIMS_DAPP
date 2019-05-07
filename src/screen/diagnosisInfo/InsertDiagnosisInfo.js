@@ -3,8 +3,11 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ScrollView
 } from "react-native";
+import Colors from "../../util/Colors";
+
 const {width, height} = Dimensions.get("window");
 
 export default class InsertDeagnosisInfo extends Component{
@@ -14,7 +17,9 @@ export default class InsertDeagnosisInfo extends Component{
 
     render() {
         return(
-            <View><Text>something</Text></View>
+            <ScrollView>
+                <View style={{width: width, backgroundColor: Colors.white, borderWidth: 1, borderColor: Colors.black}}></View>
+            </ScrollView>
         );
     }
 }
