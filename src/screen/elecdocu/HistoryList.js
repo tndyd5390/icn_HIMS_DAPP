@@ -43,7 +43,7 @@ export default class HistoryList extends Component {
     _getDocuList = async() => {
         console.log(this.state.key);
         var params = {
-                    chainCodeId : "test20",
+                    chainCodeId : "test21",
                     key : this.state.key
                 };
         await fetch('http://39.115.19.151:3000/api/getHistory',

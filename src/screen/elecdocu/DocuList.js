@@ -41,7 +41,7 @@ export default class DocuList extends Component {
     }
     _getDocuList = async() => {
         var params = {
-                    chainCodeId : "test20"
+                    chainCodeId : "test21"
                 };
         await fetch('http://39.115.19.151:3000/api/queryAll',
             {method: 'POST',
