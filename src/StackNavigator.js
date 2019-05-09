@@ -8,8 +8,8 @@ import Menu from './screen/Menu';
 import Register from './screen/user/Register';
 import Login from './screen/user/Login';
 import DocuList from './screen/elecdocu/DocuList';
+import HistoryList from './screen/elecdocu/HistoryList';
 import InsertDocu from './screen/elecdocu/InsertDocu';
-
 
 export default class StackNavigator extends Component{
     render() {
@@ -30,6 +30,16 @@ export default class StackNavigator extends Component{
                 screen: DocuList,
                 navigationOptions: {
                     title: "디지털기록문서 열람",
+                    headerTitleStyle: {
+                        width: "85%",
+                        textAlign: "center"
+                    }
+                }
+            },
+            HistoryList: {
+                screen: HistoryList,
+                navigationOptions: {
+                    title: "처리이력 조회",
                     headerTitleStyle: {
                         width: "85%",
                         textAlign: "center"

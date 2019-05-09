@@ -15,13 +15,14 @@ import {
 import Colors from '../../util/Colors';
 const { width, height } = Dimensions.get("window");
 
-export default class DocuList extends Component {
+export default class HistoryList extends Component {
     constructor(props){
         super(props);
         this.state = {
             userName : '',
             producer : '',
-            body : ''
+            body : '',
+            key : this.props.navigation.getParam("key")
         }
 
     }
@@ -40,18 +41,19 @@ export default class DocuList extends Component {
         });
     }
     _getDocuList = async() => {
+        console.log(this.state.key);
         var params = {
-                    chainCodeId : "test20"
+                    chainCodeId : "test20",
+                    key : this.state.key
                 };
-        await fetch('http://39.115.19.151:3000/api/queryAll',
+        await fetch('http://39.115.19.151:3000/api/getHistory',
             {method: 'POST',
             Accept: 'application/json',
             "headers" : {'Content-Type': 'application/json',},
             body : JSON.stringify(params)
             }).then(response=>response.json()).then((res=>{
-                console.log("");
+                console.log(res);
                 if(res.length!=0){
-                    console.log(res);
                         this.setState({
                             body : res
                         });
@@ -103,26 +105,31 @@ export default class DocuList extends Component {
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>보존기간</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '8%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>생산기관</Text>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>처리기관</Text>
                 </View>
             </View>            
             <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>생산자</Text>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>처리자</Text>
+                </View>
+            </View>            
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>처리일자</Text>
                 </View>
             </View>            
             <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>생산일자</Text>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>처리유형</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '4%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>담당자</Text>
+                    <Text style={{fontSize : 13, fontWeight : 'bold'}}>처리결과</Text>
                 </View>
-            </View>                  
+            </View>             
         </View>
             <FlatList 
                 data={this.state.body} 
@@ -146,13 +153,9 @@ class DocuAllList extends Component {
         }
     }
 
-    _goHistoryList = () =>{
-        this.props.navigation.navigate("HistoryList",{"key" : this.props.res.Key})
-    }
-
     render(){
         return(
-            <TouchableOpacity onPress={this._goHistoryList}>
+            <TouchableOpacity>
                 <DocuInfo res={this.state.res}/>
             </TouchableOpacity>
         )
@@ -163,21 +166,21 @@ class DocuInfo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            bodyHash : this.props.res.Record.body_hash,
-            docCategory : this.props.res.Record.doc_category,
-            docNum : this.props.res.Record.doc_num,
-            docSize : this.props.res.Record.doc_size,
-            docTitle : this.props.res.Record.doc_title,
-            preservePeriod : this.props.res.Record.preserve_period,
-            producer : this.props.res.Record.producer,
-            productionDate : this.props.res.Record.production_date,
-            productionOrg : this.props.res.Record.production_org,
-            processer : this.props.res.Record.processer,
-            processOrg : this.props.res.Record.process_org,
-            processDate : this.props.res.Record.process_date,
-            processType : this.props.res.Record.process_type,
-            processResult : this.props.res.Record.process_result,
-            secureGrade : this.props.res.Record.secure_grade,
+            bodyHash : this.props.res.body_hash,
+            docCategory : this.props.res.doc_category,
+            docNum : this.props.res.doc_num,
+            docSize : this.props.res.doc_size,
+            docTitle : this.props.res.doc_title,
+            preservePeriod : this.props.res.preserve_period,
+            producer : this.props.res.producer,
+            productionDate : this.props.res.production_date,
+            productionOrg : this.props.res.production_org,
+            processer : this.props.res.processer,
+            processOrg : this.props.res.process_org,
+            processDate : this.props.res.process_date,
+            processType : this.props.res.process_type,
+            processResult : this.props.res.process_result,
+            secureGrade : this.props.res.secure_grade,
         }
     }
 
@@ -222,24 +225,29 @@ class DocuInfo extends Component {
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.preservePeriod}</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '8%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.productionOrg}</Text>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processOrg}</Text>
                 </View>
             </View>            
             <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.producer}</Text>
-                </View>
-            </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
-                <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.productionDate}</Text>
-                </View>
-            </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
-                <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processer}</Text>
+                </View>
+            </View>            
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processDate}</Text>
+                </View>
+            </View>            
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processType}</Text>
+                </View>
+            </View>            
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '4%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processResult}</Text>
                 </View>
             </View>            
         </View>
