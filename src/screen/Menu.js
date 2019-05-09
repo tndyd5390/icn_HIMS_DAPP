@@ -4,7 +4,8 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 const { width, height } = Dimensions.get("window");
 export default class Init extends Component {
@@ -13,6 +14,41 @@ export default class Init extends Component {
         this.state = {
             body : null
         }
+    }
+
+    _getUserInfo = async() => {
+        const userInfo = await AsyncStorage.getItem('userInfo');
+        return JSON.parse(userInfo).NAME;
+    }
+
+    _sharedInfo = async() => {
+        const queryJSON = {
+            cert: await this._getUserInfo(),
+            txtype: "0002"
+        }
+        const param = {
+            queryJsonString: JSON.stringify(queryJSON),
+            chainCodeId: "queryString"
+        }
+        fetch("http://39.115.19.149:4000/queryStringByArray", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(param)
+        })
+        .then((resp) => resp.json())
+        .then((res) => {
+            if(res.length != 0){
+                this.props.navigation.navigate("ShareList", {
+                    ShareList : res
+                })
+            }else{
+                alert("공유기록이 없습니다.");
+            }
+        })
+
     }
 
     render() {
@@ -46,7 +82,7 @@ export default class Init extends Component {
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity 
                             style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
-                            onPress={() => this.props.navigation.navigate("ShareSearch")}
+                            onPress={this._sharedInfo}
                             >
                             <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>공유정보 조회</Text>
                         </TouchableOpacity>

@@ -10,7 +10,8 @@ import {
     KeyboardAvoidingView,
     AsyncStorage,
     ScrollView,
-    Picker
+    Picker,
+    Alert
 } from "react-native";
 import Colors from "../../util/Colors";
 const { width, height } = Dimensions.get("window");
@@ -20,11 +21,47 @@ export default class ShareSearch extends Component {
         super(props);
 
         this.state = {
-            txType : '',
+            txType : '0000',
             userInfo : '',
             diseaseCode : ''
         }
     }
+
+    _getUserInfo = async() => {
+        const userInfo = await AsyncStorage.getItem('userInfo');
+        return JSON.parse(userInfo).NAME;
+    }
+
+    _search = async() => {
+        const queryJSON = {
+            cert: await this._getUserInfo(),
+            txtype: "0002"
+        }
+        const param = {
+            queryJsonString: JSON.stringify(queryJSON),
+            chainCodeId: "queryString"
+        }
+        fetch("http://39.115.19.149:4000/queryStringByArray", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(param)
+        })
+        .then((resp) => resp.json())
+        .then((res) => {
+            if(res.length != 0){
+                this.props.navigation.navigate("ShareList", {
+                    ShareList : res
+                })
+            }else{
+                alert("공유기록이 없습니다.");
+            }
+        })
+
+    }
+
     
     render(){
         return(
@@ -50,17 +87,6 @@ export default class ShareSearch extends Component {
                         <Picker.Item label="진료기록" value="0000" />
                         <Picker.Item label="건강정보" value="0001" />
                     </Picker>
-                </View>
-                <View style={{padding : 30}}>
-                    <View style={{display : 'flex', width : width -60}}>
-                        <Text style={{textAlign : 'left', fontSize : 17, fontWeight : '500'}}>질병코드</Text>
-                    </View>
-                    <TextInput 
-                        name='email'
-                        style={{borderBottomWidth : 1, paddingTop : 5, paddingBottom : 5, width : width-60}} 
-                        placeholder='이름을 입력하세요.'
-                        onChangeText={(text)=>this.setState({diseaseCode : text})}
-                    />
                 </View>
                 </ScrollView>
                 <TouchableOpacity 

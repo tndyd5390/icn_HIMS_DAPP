@@ -1,0 +1,7 @@
+POST http://39.115.19.149:3000/api/queryAll
+Content-Type: application/json
+
+
+{
+    "chainCodeId" : "queryString"
+}

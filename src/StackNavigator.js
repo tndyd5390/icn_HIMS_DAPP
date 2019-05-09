@@ -14,6 +14,7 @@ import InsertDiagnosisInfo from "./screen/insert/InsertDiagnosisInfo";
 import InsertList from "./screen/insert/InsertList";
 import ShareRequest from "./screen/share/ShareRequest";
 import ShareSearch from "./screen/share/ShareSearch";
+import ShareList from "./screen/share/ShareList";
 
 
 export default class StackNavigator extends Component{
@@ -45,6 +46,16 @@ export default class StackNavigator extends Component{
                 screen: ShareSearch,
                 navigationOptions: {
                     title: "공유기록 검색",
+                    headerTitleStyle: {
+                        width: "85%",
+                        textAlign: "center"
+                    }
+                }
+            },
+            ShareList: {
+                screen: ShareList,
+                navigationOptions: {
+                    title: "공유기록",
                     headerTitleStyle: {
                         width: "85%",
                         textAlign: "center"

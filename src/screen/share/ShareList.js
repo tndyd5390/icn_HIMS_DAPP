@@ -17,30 +17,10 @@ export default class InquiryHealthInfo extends Component {
         super(props);
         this.state = {
             name : '',
-            body : ''
+            body : this.props.navigation.getParam("ShareList")
         }
+        console.log(this.state);
     };
-
-    componentDidMount(){
-        this._callBackend();
-    }
-    _callBackend = async() => {
-        var params = {"arr": this.props.navigation.getParam("params"), 
-                    "option":"and", "chainCodeId" : this.props.navigation.getParam("chainCodeId") }
-        await fetch('http://39.115.19.149:3000/api/getStringByArr',
-            {method: 'POST',
-            Accept: 'application/json',
-            "headers" : {'Content-Type': 'application/json',},
-            body : JSON.stringify(params)
-            }).then(response=>response.json()).then((res=>{
-                if(res.length!=0){
-                    console.log(res)
-                    this.setState({
-                        body : res
-                    });
-                }
-            }));
-    }
     _keyExtractor = (item) => item.key;
 
     render() {
@@ -83,11 +63,11 @@ class Info extends Component {
     constructor(props){
         super(props);
         this.state = {
-            patientname : this.props.res.Record.patientname,
-            doctor : this.props.res.Record.doctor,
-            hospital : this.props.res.Record.hospital,
-            date : this.props.res.Record.date,
-            deptofmedicine : this.props.res.Record.deptofmedicine,
+            provider : this.props.res.Record.provider,
+            purpose : this.props.res.Record.purpose,
+            requester : this.props.res.Record.requester,
+            shareditems : this.props.res.Record.shareditems,
+            date: this.props.res.Record.date
         }
     };
     render(){
@@ -101,22 +81,26 @@ class Info extends Component {
                     marginBottom : 5,
                     backgroundColor : this.props.backColor
             }}>
-                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                <View style={{justifyContent: 'center', marginLeft : 5}}>
                     <View>
                         <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.date}</Text>
                     </View>
                 </View>            
-                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                <View style={{justifyContent: 'center', marginLeft : 5}}>
                     <View>
-                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.hospital}</Text>
-                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.doctor}</Text>
+                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.shareditems}</Text>
                     </View>
-                </View>            
-                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                </View>     
+                <View style={{justifyContent: 'center', marginLeft : 5}}>
                     <View>
-                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.deptofmedicine}</Text>
+                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.requester}</Text>
                     </View>
-                </View>            
+                </View>    
+                <View style={{justifyContent: 'center', marginLeft : 5}}>
+                    <View>
+                        <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.purpose}</Text>
+                    </View>
+                </View>  
             </View>
         )
     };
