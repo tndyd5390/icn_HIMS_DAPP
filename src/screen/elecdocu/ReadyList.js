@@ -15,14 +15,13 @@ import {
 import Colors from '../../util/Colors';
 const { width, height } = Dimensions.get("window");
 
-export default class HistoryList extends Component {
+export default class ReadyList extends Component {
     constructor(props){
         super(props);
         this.state = {
             userName : '',
             producer : '',
-            body : '',
-            key : this.props.navigation.getParam("key")
+            body : ''
         }
 
     }
@@ -31,7 +30,19 @@ export default class HistoryList extends Component {
         this._getDocuList();
         this._showAlert();
     }
-    
+
+    _showAlert = () => {
+        Alert.alert(
+            "Alert", 
+            "time : 2019-05-10T07:12:33.219Z \nerror : processer, process_org, process_date ERROR",
+            [
+                // { text: 'Ok', onPress: () => console.log('OK Pressed') },
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+            ],
+            { cancelable: false },
+          );
+    }
+
     _getUserInfo = async() => {
         const userInfo = await AsyncStorage.getItem('userInfo');
         const fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -42,19 +53,20 @@ export default class HistoryList extends Component {
         });
     }
     _getDocuList = async() => {
-        console.log(this.state.key);
         var params = {
-                    chainCodeId : "test21",
-                    key : this.state.key
+                    arr : ["process_type", "이관준비"],
+                    option : "and",
+                    chainCodeId : "test21"
                 };
-        await fetch('http://39.115.19.151:3000/api/getHistory',
+        await fetch('http://39.115.19.151:3000/api/getStringByArr',
             {method: 'POST',
             Accept: 'application/json',
             "headers" : {'Content-Type': 'application/json',},
             body : JSON.stringify(params)
             }).then(response=>response.json()).then((res=>{
-                console.log(res);
+                console.log("");
                 if(res.length!=0){
+                    console.log(res);
                         this.setState({
                             body : res
                         });
@@ -154,9 +166,13 @@ class DocuAllList extends Component {
         }
     }
 
+    _goHistoryList = () =>{
+        this.props.navigation.navigate("HistoryList",{"key" : this.props.res.Key})
+    }
+
     render(){
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._goHistoryList}>
                 <DocuInfo res={this.state.res}/>
             </TouchableOpacity>
         )
@@ -167,21 +183,21 @@ class DocuInfo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            bodyHash : this.props.res.body_hash,
-            docCategory : this.props.res.doc_category,
-            docNum : this.props.res.doc_num,
-            docSize : this.props.res.doc_size,
-            docTitle : this.props.res.doc_title,
-            preservePeriod : this.props.res.preserve_period,
-            producer : this.props.res.producer,
-            productionDate : this.props.res.production_date,
-            productionOrg : this.props.res.production_org,
-            processer : this.props.res.processer,
-            processOrg : this.props.res.process_org,
-            processDate : this.props.res.process_date,
-            processType : this.props.res.process_type,
-            processResult : this.props.res.process_result,
-            secureGrade : this.props.res.secure_grade,
+            bodyHash : this.props.res.Record.body_hash,
+            docCategory : this.props.res.Record.doc_category,
+            docNum : this.props.res.Record.doc_num,
+            docSize : this.props.res.Record.doc_size,
+            docTitle : this.props.res.Record.doc_title,
+            preservePeriod : this.props.res.Record.preserve_period,
+            producer : this.props.res.Record.producer,
+            productionDate : this.props.res.Record.production_date,
+            productionOrg : this.props.res.Record.production_org,
+            processer : this.props.res.Record.processer,
+            processOrg : this.props.res.Record.process_org,
+            processDate : this.props.res.Record.process_date,
+            processType : this.props.res.Record.process_type,
+            processResult : this.props.res.Record.process_result,
+            secureGrade : this.props.res.Record.secure_grade,
         }
     }
 
@@ -196,7 +212,7 @@ class DocuInfo extends Component {
                 marginBottom : 5,
                 backgroundColor : this.props.backColor
         }}>
-            <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 5, width : '15%'}}>
+       <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 5, width : '15%'}}>
                 <View>
                     <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.docNum}</Text>
                 </View>

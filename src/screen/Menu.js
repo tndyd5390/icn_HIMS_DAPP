@@ -24,7 +24,23 @@ export default class Init extends Component {
                             style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
                             onPress={() => this.props.navigation.navigate("DocuList")}
                             >
-                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>디지털기록문서 열람</Text>
+                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>디지털기록문서 생산현황</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                        <TouchableOpacity 
+                            style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
+                            onPress={() => this.props.navigation.navigate("ReadyList")}
+                            >
+                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>이관준비목록 열람</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                        <TouchableOpacity 
+                            style={{backgroundColor: 'skyblue', width: '60%', height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 10}}
+                            onPress={() => this.props.navigation.navigate("CompleteList")}
+                            >
+                            <Text style={{color: 'white', fontSize: 20, fontWeight: '300'}}>디지털기록문서 인수 목록</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{alignItems: 'center'}}>

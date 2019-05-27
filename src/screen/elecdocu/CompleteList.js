@@ -15,23 +15,32 @@ import {
 import Colors from '../../util/Colors';
 const { width, height } = Dimensions.get("window");
 
-export default class HistoryList extends Component {
+export default class CompleteList extends Component {
     constructor(props){
         super(props);
         this.state = {
             userName : '',
             producer : '',
-            body : '',
-            key : this.props.navigation.getParam("key")
+            body : ''
         }
 
     }
     componentDidMount(){
         this._getUserInfo();
         this._getDocuList();
-        this._showAlert();
     }
-    
+
+    _showAlert = () => {
+        Alert.alert(
+            "이관 수행 오류 자동처리", "메타데이터 자동 입력",
+            [
+                { text: 'Ok', onPress: () => console.log('OK Pressed') },
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+            ],
+            { cancelable: false },
+          );
+    }
+
     _getUserInfo = async() => {
         const userInfo = await AsyncStorage.getItem('userInfo');
         const fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -42,19 +51,20 @@ export default class HistoryList extends Component {
         });
     }
     _getDocuList = async() => {
-        console.log(this.state.key);
         var params = {
-                    chainCodeId : "test21",
-                    key : this.state.key
+                    arr : ["process_type", "인수"],
+                    option : "and",
+                    chainCodeId : "test21"
                 };
-        await fetch('http://39.115.19.151:3000/api/getHistory',
+        await fetch('http://39.115.19.151:3000/api/getStringByArr',
             {method: 'POST',
             Accept: 'application/json',
             "headers" : {'Content-Type': 'application/json',},
             body : JSON.stringify(params)
             }).then(response=>response.json()).then((res=>{
-                console.log(res);
+                console.log("");
                 if(res.length!=0){
+                    console.log(res);
                         this.setState({
                             body : res
                         });
@@ -76,12 +86,12 @@ export default class HistoryList extends Component {
                 marginBottom : 5,
                 backgroundColor : Colors.lightGrey
                  }}>
-            <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 5, width : '15%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 3, width : '10%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>문서번호</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center',width : '23%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center',width : '21%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>문서제목</Text>
                 </View>
@@ -130,7 +140,12 @@ export default class HistoryList extends Component {
                 <View>
                     <Text style={{fontSize : 13, fontWeight : 'bold'}}>처리결과</Text>
                 </View>
-            </View>             
+            </View>
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>담당자</Text>
+                </View>
+            </View>            
         </View>
             <FlatList 
                 data={this.state.body} 
@@ -154,9 +169,13 @@ class DocuAllList extends Component {
         }
     }
 
+    _goHistoryList = () =>{
+        this.props.navigation.navigate("HistoryList",{"key" : this.props.res.Key})
+    }
+
     render(){
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._goHistoryList}>
                 <DocuInfo res={this.state.res}/>
             </TouchableOpacity>
         )
@@ -167,21 +186,21 @@ class DocuInfo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            bodyHash : this.props.res.body_hash,
-            docCategory : this.props.res.doc_category,
-            docNum : this.props.res.doc_num,
-            docSize : this.props.res.doc_size,
-            docTitle : this.props.res.doc_title,
-            preservePeriod : this.props.res.preserve_period,
-            producer : this.props.res.producer,
-            productionDate : this.props.res.production_date,
-            productionOrg : this.props.res.production_org,
-            processer : this.props.res.processer,
-            processOrg : this.props.res.process_org,
-            processDate : this.props.res.process_date,
-            processType : this.props.res.process_type,
-            processResult : this.props.res.process_result,
-            secureGrade : this.props.res.secure_grade,
+            bodyHash : this.props.res.Record.body_hash,
+            docCategory : this.props.res.Record.doc_category,
+            docNum : this.props.res.Record.doc_num,
+            docSize : this.props.res.Record.doc_size,
+            docTitle : this.props.res.Record.doc_title,
+            preservePeriod : this.props.res.Record.preserve_period,
+            producer : this.props.res.Record.producer,
+            productionDate : this.props.res.Record.production_date,
+            productionOrg : this.props.res.Record.production_org,
+            processer : this.props.res.Record.processer,
+            processOrg : this.props.res.Record.process_org,
+            processDate : this.props.res.Record.process_date,
+            processType : this.props.res.Record.process_type,
+            processResult : this.props.res.Record.process_result,
+            secureGrade : this.props.res.Record.secure_grade,
         }
     }
 
@@ -196,12 +215,12 @@ class DocuInfo extends Component {
                 marginBottom : 5,
                 backgroundColor : this.props.backColor
         }}>
-            <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 5, width : '15%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 3, width : '10%'}}>
                 <View>
                     <Text style={{fontSize : 20, fontWeight : 'bold'}}>{this.state.docNum}</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center',width : '23%'}}>
+            <View style={{justifyContent: 'center', alignItems : 'center',width : '21%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.docTitle}</Text>
                 </View>
@@ -249,6 +268,11 @@ class DocuInfo extends Component {
             <View style={{justifyContent: 'center', alignItems : 'center', width : '4%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processResult}</Text>
+                </View>
+            </View>            
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '7%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processer}</Text>
                 </View>
             </View>            
         </View>
