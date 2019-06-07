@@ -38,7 +38,7 @@ export default class SearchInfo extends Component{
     }
 
     _search = async() => {
-        this.props.navigation.navigate("InquiryHealthInfo", {params : [this.state.search,this.state.userInfo, 'txType' ,this.state.txType], chainCodeId : 'queryString'});
+        this.props.navigation.navigate("InquiryHealthInfo", {params : [this.state.search,this.state.userInfo, 'txType' ,this.state.txType], chainCodeId : 'hims3'});
     }
 
     render(){

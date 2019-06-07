@@ -41,9 +41,9 @@ export default class DocuList extends Component {
     }
     _getDocuList = async() => {
         var params = {
-                    chainCodeId : "test21"
+                    chainCodeId : "docu"
                 };
-        await fetch('http://39.115.19.151:3000/api/queryAll',
+        await fetch('http://39.115.19.149:3000/api/queryAll',
             {method: 'POST',
             Accept: 'application/json',
             "headers" : {'Content-Type': 'application/json',},
@@ -75,7 +75,7 @@ export default class DocuList extends Component {
                  }}>
             <View style={{justifyContent: 'center', alignItems : 'center', marginLeft : 5, width : '15%'}}>
                 <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>문서번호</Text>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>문서등록번호</Text>
                 </View>
             </View>            
             <View style={{justifyContent: 'center', alignItems : 'center',width : '23%'}}>
@@ -102,7 +102,12 @@ export default class DocuList extends Component {
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>보존기간</Text>
                 </View>
-            </View>            
+            </View>    
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+                <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>실존장소</Text>
+                </View>
+            </View>             
             <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>생산기관</Text>
@@ -118,11 +123,7 @@ export default class DocuList extends Component {
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>생산일자</Text>
                 </View>
             </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
-                <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>담당자</Text>
-                </View>
-            </View>                  
+             
         </View>
             <FlatList 
                 data={this.state.body} 
@@ -224,6 +225,12 @@ class DocuInfo extends Component {
             </View>            
             <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
                 <View>
+                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processer}</Text>
+                </View>
+            </View>            
+
+            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
+                <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.productionOrg}</Text>
                 </View>
             </View>            
@@ -235,11 +242,6 @@ class DocuInfo extends Component {
             <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
                 <View>
                     <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.productionDate}</Text>
-                </View>
-            </View>            
-            <View style={{justifyContent: 'center', alignItems : 'center', width : '10%'}}>
-                <View>
-                    <Text style={{fontSize : 15, fontWeight : 'bold'}}>{this.state.processer}</Text>
                 </View>
             </View>            
         </View>

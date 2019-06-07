@@ -11,6 +11,7 @@ import {
     ScrollView,
     Platform
 } from 'react-native';
+import Colors from '../util/Colors';
 const { width, height } = Dimensions.get("window");
 export default class InquiryHealthInfo extends Component {
     constructor(props){
@@ -55,6 +56,35 @@ export default class InquiryHealthInfo extends Component {
     render() {
         return(
                 <ScrollView style={[{display : 'flex', backgroundColor : 'white'}, Platform.OS ==='ios' ? {marginTop : 10} : null]} >
+                <View style={{
+                    flex:1,
+                    flexDirection: 'row',
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    height : 70,
+                    backgroundColor : Colors.buttonBlue
+                 }}>
+                <View style={{justifyContent: 'center',alignItems : 'center', marginLeft : 22}}>
+                    <View>
+                        <Text style={{fontSize : 20,color : Colors.white,fontWeight : 'bold'}}>진료일자</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 31}}>
+                    <View>
+                        <Text style={{fontSize : 20, color : Colors.white,fontWeight : 'bold'}}>진료병원</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{fontSize : 20, color : Colors.white,fontWeight : 'bold'}}>진료의사</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{fontSize : 20, color : Colors.white,fontWeight : 'bold'}}>진료과</Text>
+                    </View>
+                </View>            
+            </View>
                     <FlatList 
                         data={this.state.body} 
                         keyExtractor={this._keyExtractor}
@@ -106,7 +136,7 @@ class Info extends Component {
                     flexDirection: 'row',
                     paddingHorizontal: 10,
                     paddingVertical: 5,
-                    height : 130,
+                    height : 90,
                     marginBottom : 5,
                     backgroundColor : this.props.backColor
             }}>
