@@ -40,7 +40,7 @@ export default class InquiryHealthInfo extends Component {
           await AsyncStorage.setItem('fcmToken', loginFcmToken);
         }
     
-        await fetch('http://39.115.19.149:3000/user/login',
+        await fetch('http://39.115.19.149:4500/user/login',
         {method: 'POST',
         headers: {
             Accept: 'application/json',

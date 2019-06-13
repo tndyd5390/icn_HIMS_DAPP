@@ -11,6 +11,7 @@ import {
     ScrollView,
     Platform
 } from 'react-native';
+import Colors from '../util/Colors';
 const { width, height } = Dimensions.get("window");
 export default class InquiryHealthInfo extends Component {
     constructor(props){
@@ -27,7 +28,7 @@ export default class InquiryHealthInfo extends Component {
     _callBackend = async() => {
         var params = {"arr": this.props.navigation.getParam("params"), 
                     "option":"and", "chainCodeId" : this.props.navigation.getParam("chainCodeId") }
-        await fetch('http://39.115.19.149:3000/api/getStringByArr',
+        await fetch('http://39.115.19.149:4500/api/getStringByArr',
             {method: 'POST',
             Accept: 'application/json',
             "headers" : {'Content-Type': 'application/json',},
@@ -55,6 +56,36 @@ export default class InquiryHealthInfo extends Component {
     render() {
         return(
                 <ScrollView style={[{display : 'flex', backgroundColor : 'white'}, Platform.OS ==='ios' ? {marginTop : 10} : null]} >
+                            <View style={{
+                                flex:1,
+                                flexDirection: 'row',
+                                paddingHorizontal: 10,
+                                paddingVertical: 5,
+                                height : 70,
+                                marginBottom : 5,
+                                backgroundColor : Colors.buttonSky
+                            }}>
+                <View style={{justifyContent: 'center', marginLeft : 10}}>
+                    <View>
+                        <Text style={{paddingLeft : 12,fontSize : 20, fontWeight : 'bold', color : Colors.white}}>진료일자</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{paddingLeft : 15,fontSize : 20, fontWeight : 'bold', color : Colors.white}}>진료병원</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{paddingLeft : 0,fontSize : 20, fontWeight : 'bold', color : Colors.white}}>진료의사</Text>
+                    </View>
+                </View>            
+                <View style={{justifyContent: 'center', marginLeft : 15}}>
+                    <View>
+                        <Text style={{paddingLeft : 3,fontSize : 20, fontWeight : 'bold', color : Colors.white}}>진료과</Text>
+                    </View>
+                </View>            
+                </View>
                     <FlatList 
                         data={this.state.body} 
                         keyExtractor={this._keyExtractor}
@@ -106,7 +137,7 @@ class Info extends Component {
                     flexDirection: 'row',
                     paddingHorizontal: 10,
                     paddingVertical: 5,
-                    height : 130,
+                    height : 100,
                     marginBottom : 5,
                     backgroundColor : this.props.backColor
             }}>
